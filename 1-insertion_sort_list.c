@@ -9,7 +9,7 @@
  */
 void insertion_sort(int *array, size_t size)
 {
-	size_t i, j, moveItem;
+	size_t i, moveItem;
 	int current;
 
 	for (i = 1; i < size; i++)
