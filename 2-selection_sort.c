@@ -1,43 +1,45 @@
 #include "sort.h"
 
 /**
- * insertion_sort_list - Sorts a doubly linked list of integers
- * in ascending order using the insertion sort algorithm.
- *
- * @list: Pointer to a pointer to the head of the list.
+ * swap_ints - Swap two integers in an array.
+ * @a: The first integer to swap.
+ * @b: The second integer to swap.
  */
-void insertion_sort_list(listint_t **list)
+void swap_ints(int *a, int *b)
 {
-	listint_t *current, *temp;
+	int tmp;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+/**
+ * selection_sort - Sort an array of integers in ascending order
+ *                  using the selection sort algorithm.
+ * @array: An array of integers.
+ * @size: The size of the array.
+ *
+ * Description: Prints the array after each swap.
+ */
+void selection_sort(int *array, size_t size)
+{
+	int *min;
+	size_t i, j;
+
+	if (array == NULL || size < 2)
 		return;
 
-	current = (*list)->next;
-
-	while (current != NULL)
+	for (i = 0; i < size - 1; i++)
 	{
-		temp = current;
+		min = array + i;
+		for (j = i + 1; j < size; j++)
+			min = (array[j] < *min) ? (array + j) : min;
 
-		while (temp->prev != NULL && temp->n < temp->prev->n)
+		if ((array + i) != min)
 		{
-			temp->prev->next = temp->next;
-
-			if (temp->next != NULL)
-				temp->next->prev = temp->prev;
-
-			temp->next = temp->prev;
-			temp->prev = temp->prev->prev;
-			temp->next->prev = temp;
-
-			if (temp->prev == NULL)
-				*list = temp;
-			else
-				temp->prev->next = temp;
-
-			print_list(*list);
+			swap_ints(array + i, min);
+			print_array(array, size);
 		}
-
-		current = current->next;
 	}
 }
